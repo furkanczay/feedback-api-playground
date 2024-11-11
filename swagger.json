@@ -22,10 +22,19 @@
 							}
 						}
 					}
-				}
+				},
+				"parameters": [
+					{
+						"name": "x-feedback-token",
+						"in": "header",
+						"description": "Uygulamayı kullananın siz olduğunu doğrulamak için gereklidir.",
+						"required": true,
+						"type": "string"
+					}
+				]
 			},
 			"post": {
-				"summary": "Create a new item",
+				"summary": "Yeni feedback ekler",
 				"parameters": [
 					{
 						"in": "body",
@@ -33,8 +42,22 @@
 						"description": "Item object",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Item"
+							"$ref": "#/definitions/PostItem"
 						}
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Hangi kullanıcının login olduğunu belirlemek için kullanılır (Bearer token)",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "x-feedback-token",
+						"in": "header",
+						"description": "Uygulamayı kullananın siz olduğunu doğrulamak için gereklidir.",
+						"required": true,
+						"type": "string"
 					}
 				],
 				"responses": {
@@ -44,13 +67,20 @@
 				}
 			}
 		},
-		"/items/{id}": {
+		"/feedbacks/{slug}": {
 			"get": {
-				"summary": "Get an item by ID",
+				"summary": "Slug değerine göre feedback getirir",
 				"parameters": [
 					{
-						"name": "id",
+						"name": "slug",
 						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "x-feedback-token",
+						"in": "header",
+						"description": "Uygulamayı kullananın siz olduğunu doğrulamak için gereklidir.",
 						"required": true,
 						"type": "string"
 					}
@@ -65,11 +95,25 @@
 				}
 			},
 			"put": {
-				"summary": "Update an item by ID",
+				"summary": "Bir feedbacki günceller",
 				"parameters": [
 					{
-						"name": "id",
+						"name": "slug",
 						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Hangi kullanıcının login olduğunu belirlemek için kullanılır (Bearer token)",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "x-feedback-token",
+						"in": "header",
+						"description": "Uygulamayı kullananın siz olduğunu doğrulamak için gereklidir.",
 						"required": true,
 						"type": "string"
 					},
@@ -79,7 +123,7 @@
 						"description": "Updated item object",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Item"
+							"$ref": "#/definitions/PostItem"
 						}
 					}
 				],
@@ -90,17 +134,31 @@
 				}
 			},
 			"delete": {
-				"summary": "Delete an item by ID",
+				"summary": "Feedbacki siler",
 				"parameters": [
 					{
-						"name": "id",
+						"name": "slug",
 						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "x-feedback-token",
+						"in": "header",
+						"description": "Uygulamayı kullananın siz olduğunu doğrulamak için gereklidir.",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Hangi kullanıcının login olduğunu belirlemek için kullanılır (Bearer token)",
 						"required": true,
 						"type": "string"
 					}
 				],
 				"responses": {
-					"204": {
+					"200": {
 						"description": "Item deleted"
 					}
 				}
@@ -114,11 +172,74 @@
 				"id": {
 					"type": "string"
 				},
-				"name": {
+				"title": {
 					"type": "string"
 				},
 				"description": {
 					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"userId": {
+					"type": "number"
+				},
+				"categoryId": {
+					"type": "number"
+				},
+				"createdAt": {
+					"type": "string"
+				},
+				"updatedAt": {
+					"type": "string"
+				},
+				"user": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number"
+						},
+						"name": {
+							"type": "string"
+						},
+						"email": {
+							"type": "string"
+						}
+					}
+				},
+				"category": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number"
+						},
+						"name": {
+							"type": "string"
+						},
+						"slug": {
+							"type": "string"
+						},
+						"createdAt": {
+							"type": "string"
+						},
+						"updatedAt": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"PostItem": {
+			"type": "object",
+			"properties": {
+				"title": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"category": {
+					"type": "number"
 				}
 			}
 		}
