@@ -5,7 +5,7 @@
 		"title": "Feedback API",
 		"description": "API Description"
 	},
-	"host": "feedbackapi.czaylabs.com.tr:3012",
+	"host": "feedbackapi.czaylabs.com.tr",
 	"basePath": "/",
 	"schemes": ["http"],
 	"paths": {
