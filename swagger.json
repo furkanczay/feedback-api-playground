@@ -1,0 +1,126 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "1.0.0",
+		"title": "Feedback API",
+		"description": "API Description"
+	},
+	"host": "localhost:3012",
+	"basePath": "/",
+	"schemes": ["http"],
+	"paths": {
+		"/feedbacks": {
+			"get": {
+				"summary": "Tüm feedbackleri getirir",
+				"responses": {
+					"200": {
+						"description": "Tüm feedbackleri listeleyen endpoint",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Item"
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"summary": "Create a new item",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Item object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Item"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Item created"
+					}
+				}
+			}
+		},
+		"/items/{id}": {
+			"get": {
+				"summary": "Get an item by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Item details",
+						"schema": {
+							"$ref": "#/definitions/Item"
+						}
+					}
+				}
+			},
+			"put": {
+				"summary": "Update an item by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"in": "body",
+						"name": "body",
+						"description": "Updated item object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Item"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Item updated"
+					}
+				}
+			},
+			"delete": {
+				"summary": "Delete an item by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Item deleted"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Item": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
